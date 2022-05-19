@@ -1,36 +1,52 @@
 const { DataTypes } = require("sequelize");
+const Genre = require("./Genre");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("videogame", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+  sequelize.define(
+    "videogame",
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      released: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+      },
+      rating: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+      },
+      platforms: {
+        type: DataTypes.JSON,
+        allowNull: false,
+      },
+      background_image: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      created: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
-    id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
-    },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    released: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    rating: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-    },
-    platforms: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    },
-  });
+
+    {
+      timestamps: false,
+    }
+  );
 };
 
 // [ ] Videojuego con las siguientes propiedades:

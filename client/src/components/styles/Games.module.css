@@ -1,0 +1,21 @@
+.games {
+  background-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  margin: 2px;
+  padding: 1px;
+  border-radius: 1rem;
+}
+
+.img {
+  width: 350px;
+  height: 250px;
+}
+
+.title {
+  color: blanchedalmond;
+}
+
+.genres {
+  color: blanchedalmond;
+}

@@ -3,18 +3,25 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("genre", {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: true,
+  sequelize.define(
+    "genre",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
-    ID: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      delfaultValue: DataTypes.UUIDV4,
-    },
-  });
+
+    {
+      timestamps: false,
+    }
+  );
 };
 
 // [ ] Genero con las siguientes propiedades:

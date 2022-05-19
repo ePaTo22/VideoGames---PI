@@ -1,29 +1,40 @@
+const { default: axios } = require("axios");
 const { Router } = require("express");
 const router = Router();
 const { Genre } = require("../db");
+const { API_KEY } = process.env;
 
 // Ruta Genres -- [ ] GET /genres:
 // Obtener todos los tipos de géneros de videojuegos posibles
 // En una primera instancia deberán traerlos desde rawg y guardarlos en su propia base de datos y luego ya utilizarlos desde allí
 
+async function getGenres() {
+  let arr = [];
+  let response = await axios.get(
+    `https://api.rawg.io/api/genres?key=${API_KEY}`
+  );
+
+  response.data.results.forEach((el) => {
+    arr.push(el.name);
+  });
+
+  let arr2 = arr.map((el) => ({ name: el }));
+
+  const allGenres = await Genre.bulkCreate(arr2);
+}
+
 router.get("/", async (req, res, next) => {
   try {
-    res.send(genre);
+    let genresDB = await Genre.findAll({});
+    if (genresDB.length < 2) {
+      await getGenres();
+      genresDB = await Genre.findAll({});
+    }
+
+    return res.send(genresDB);
   } catch (error) {
     next(error);
   }
-});
-
-router.post("/", (req, res, next) => {
-  res.send("Esto es el post en genre");
-});
-
-router.put("/", (req, res, next) => {
-  res.send("Esto es el put en genre");
-});
-
-router.delete("/", (req, res, next) => {
-  res.send("Esto es el delete en genre");
 });
 
 module.exports = router;
