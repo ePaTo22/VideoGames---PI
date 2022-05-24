@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 export const AXIOS_VIDEOGAMES = "AXIOS_VIDEOGAMES";
 export const SEARCH_VIDEOGAME = "SEARCH_VIDEOGAME";
 export const SORT_VIDEOGAMES = "SORT_VIDEOGAMES";
@@ -8,6 +7,7 @@ export const FILTER_CREATED = "FILTER_CREATED";
 export const FILTER_BY_GENRE = "FILTER_BY_GENRE";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_RATING = "ORDER_BY_RATING";
+export const GET_PLATFORMS = "GET_PLATFORMS";
 
 export function axiosVideogames() {
   return function (dispatch) {
@@ -48,6 +48,24 @@ export function getGenre() {
       .get(`http://localhost:3001/api/genre`)
       .then((genres) => {
         dispatch({ type: GET_GENRE, payload: genres.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export function getPlatforms() {
+  return function (dispatch) {
+    axios
+      .get(`http://localhost:3001/api/videogame`)
+      .then((platforms) => {
+        dispatch({
+          type: GET_PLATFORMS,
+          payload: platforms.data.map((el) => {
+            return el.platforms;
+          }),
+        });
       })
       .catch((err) => {
         console.log(err);

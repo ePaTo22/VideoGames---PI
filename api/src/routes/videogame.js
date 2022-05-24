@@ -54,6 +54,12 @@ router.get("/", async (req, res, next) => {
           image: el.background_image,
           name: el.name,
           rating: el.rating,
+          platforms: el.platforms
+            .map((p) => {
+              return p.platform.name;
+            })
+            .join(", "),
+
           genres: el.genres.map((el) => {
             return el.name + " ";
           }),
@@ -97,6 +103,12 @@ router.get("/", async (req, res, next) => {
           image: el.background_image,
           name: el.name,
           rating: el.rating,
+          platforms: el.platforms
+            .map((p) => {
+              return p.platform.name;
+            })
+            .join(", "),
+
           genres: el.genres.map((el) => {
             return el.name + " ";
           }),
@@ -207,7 +219,12 @@ router.post("/", async (req, res, next) => {
       platforms,
       background_image,
     });
-    await newVideogame.addGenre(genres);
+
+    let dbGenre = await Genre.findAll({
+      where: { name: genres },
+    });
+
+    await newVideogame.addGenre(dbGenre);
     res.send(newVideogame);
   } catch (err) {
     next(err);

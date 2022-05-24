@@ -15,9 +15,11 @@
 
 .text {
   font-family: "Open Sans", sans-serif;
+  font-size: 40px;
 }
 
 .button {
+  margin-top: 50px;
   margin-left: 50px;
   background: #4f4cac;
   border: 0;

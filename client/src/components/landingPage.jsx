@@ -11,13 +11,14 @@ export default function LandingPage() {
         <div>
           <div>
             <h3 className={s.text}>
-              This video game site was created by Patricio Turpin. <br /> Click
-              the button below to go to the site, enjoy!!
+              <br /> VIDEOGAMES
+              <br />
+              <br /> Click the button below to explore!
             </h3>
           </div>
           <NavLink to={"/home"}>
             <button className={s.button} src="/home">
-              LETS GO!
+              HOME
             </button>
           </NavLink>
         </div>

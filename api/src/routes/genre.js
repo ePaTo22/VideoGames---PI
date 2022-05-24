@@ -9,18 +9,15 @@ const { API_KEY } = process.env;
 // En una primera instancia deberán traerlos desde rawg y guardarlos en su propia base de datos y luego ya utilizarlos desde allí
 
 async function getGenres() {
-  let arr = [];
-  let response = await axios.get(
-    `https://api.rawg.io/api/genres?key=${API_KEY}`
-  );
-
-  response.data.results.forEach((el) => {
-    arr.push(el.name);
-  });
-
-  let arr2 = arr.map((el) => ({ name: el }));
-
-  const allGenres = await Genre.bulkCreate(arr2);
+  let genresAPI = await axios
+    .get(`https://api.rawg.io/api/genres?key=${API_KEY}`)
+    .then((e) => {
+      let genres = e.data.results.map(async (genre) => {
+        await Genre.findOrCreate({
+          where: { id: genre.id, name: genre.name },
+        });
+      });
+    });
 }
 
 router.get("/", async (req, res, next) => {
@@ -38,3 +35,18 @@ router.get("/", async (req, res, next) => {
 });
 
 module.exports = router;
+
+// async function getGenres() {
+//   let arr = [];
+//   let response = await axios.get(
+//     `https://api.rawg.io/api/genres?key=${API_KEY}`
+//   );
+
+//   response.data.results.forEach((el) => {
+//     arr.push(el.name);
+//   });
+
+//   let arr2 = arr.map((el) => ({ name: el }));
+
+//   const allGenres = await Genre.bulkCreate(arr2);
+// }

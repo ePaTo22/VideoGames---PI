@@ -1,38 +1,30 @@
 import { useEffect, useState } from "react";
 import Games from "./Games.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { axiosVideogames, getGenre } from "../Store/actions";
+import {
+  axiosVideogames,
+  getGenre,
+  orderByName,
+  orderByRating,
+  filterByCreated,
+  filterByGenre,
+} from "../Store/actions";
 import { Pagination } from "./Pagination.js";
-import Videogame from "./videogame";
 import s from "./styles/videogames.module.css";
-import axios from "axios";
+import NavBar from "./navBar.jsx";
 
 export default function Videogames() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const videogames = useSelector((state) => state.filteredVideogames);
-  const [games, setGames] = useState([]);
+  const games = useSelector((state) => state.filteredVideogames);
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage] = useState(15);
 
   useEffect(() => {
-    dispatch(getGenre());
     dispatch(axiosVideogames());
-  }, []);
-
-  useEffect(() => {
-    const axiosGames = async () => {
-      setLoading(true);
-      const res = await axios.get("http://localhost:3001/api/videogame");
-      setGames(res.data);
-      setLoading(false);
-    };
-
-    axiosGames();
+    dispatch(getGenre());
   }, []);
 
   console.log(games);
-
   //get current games
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
@@ -41,52 +33,73 @@ export default function Videogames() {
   //change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(games.length / gamesPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  function handleSortName(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(orderByName(e.target.value));
+  }
+
+  function handleSortRating(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(orderByRating(e.target.value));
+  }
+
+  function handleFilterGenre(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterByGenre(e.target.value));
+  }
+
+  function handleFilterCreated(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterByCreated(e.target.value));
+  }
+
+  if (games.length === 0) {
+    return <h1 className={s.loading}>Loading...</h1>;
+  }
   return (
-    <div>
-      <h1>Probando Paginado</h1>
-      <Games games={currentGames} loading={loading} />
-      <Pagination
-        gamesPerPage={gamesPerPage}
-        totalGames={games.length}
-        paginate={paginate}
-      />
+    <div className={s.container}>
+      <div className={s.containNav}>
+        <NavBar
+          handleFilterCreated={handleFilterCreated}
+          handleFilterGenre={handleFilterGenre}
+          handleSortName={handleSortName}
+          handleSortRating={handleSortRating}
+        />
+      </div>
+
+      <div className={s.containGames}>
+        <Games games={currentGames} />
+      </div>
+
+      <div className={s.containPagination}>
+        <Pagination
+          gamesPerPage={gamesPerPage}
+          totalGames={games.length}
+          paginate={paginate}
+          prevPage={prevPage}
+          nextPage={nextPage}
+        />
+      </div>
     </div>
   );
 }
-
-// import { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { axiosVideogames, getGenre } from "../Store/actions";
-// import Videogame from "./videogame";
-// import s from "./styles/videogames.module.css";
-
-// export default function Videogames() {
-//   const dispatch = useDispatch();
-//   const [loading, setLoading] = useState(false);
-//   const videogames = useSelector((state) => state.filteredVideogames);
-
-//   setTimeout(() => {
-//     setLoading(false);
-//   }, "2000");
-
-//   if (loading) {
-//     return <h1 className={s.loading}>Loading videogames...</h1>;
-//   }
-//   return (
-//     <div className={s.container}>
-//       {videogames.map((videogame, i) => {
-//         return (
-//           <div key={i} className={s.videogames}>
-//             <Videogame
-//               id={videogame.id}
-//               name={videogame.name}
-//               image={videogame.image}
-//               genres={videogame.genres}
-//               platforms={videogame.platforms}
-//             />
-//           </div>
-//         );
-//       })}
-//     </div>
-//   );
-// }
