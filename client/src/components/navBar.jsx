@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import SearchBar from "./searchbar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   ASCENDING,
   DESCENDING,
@@ -11,20 +11,52 @@ import {
   CREATED,
   EXISTING,
 } from "../const/order";
+import {
+  orderByName,
+  orderByRating,
+  filterByCreated,
+  filterByGenre,
+} from "../Store/actions";
 import s from "./styles/Navbar.module.css";
 
-export default function NavBar({
-  handleSortName,
-  handleSortRating,
-  handleFilterGenre,
-  handleFilterCreated,
-}) {
+export default function NavBar({ setCurrentPage }) {
   const allGenre = useSelector((state) => state.genres);
+  const dispatch = useDispatch();
+  const [filter, setFilter] = useState([]);
+
+  function handleSortName(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(orderByName(e.target.value));
+  }
+
+  function handleSortRating(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(orderByRating(e.target.value));
+  }
+
+  function handleFilterGenre(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterByGenre(e.target.value));
+    console.log(filter);
+  }
+
+  function handleFilterCreated(e) {
+    console.log(e.target.value);
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(filterByCreated(e.target.value));
+  }
 
   return (
     <div className={s.containerAll}>
       <div className={s.containerSearch}>
-        <SearchBar />
+        <SearchBar setCurrentPage={setCurrentPage} />
       </div>
 
       <div className={s.containerSelects}>
@@ -58,16 +90,10 @@ export default function NavBar({
           <option disabled="disabled" value="DEFAULT" className={s.option}>
             Filter by Genre
           </option>
-          <option>All</option>
           {allGenre.map((genre) => (
-            <>
-              <option key={genre.name} value={genre.name} className={s.opt}>
-                {genre.name}
-              </option>
-              <div>
-                <p>{genre.name}</p>
-              </div>
-            </>
+            <option key={genre.name} value={genre.name} className={s.opt}>
+              {genre.name}
+            </option>
           ))}
         </select>
 
@@ -77,6 +103,10 @@ export default function NavBar({
           <option value={CREATED}>Created</option>
           <option value={EXISTING}>Existing</option>
         </select>
+
+        <button className={s.clear} onClick={handleFilterGenre} value="All">
+          Clear{" "}
+        </button>
 
         <div className={s.butDiv}>
           <NavLink to={"/add"}>
@@ -89,16 +119,3 @@ export default function NavBar({
     </div>
   );
 }
-
-// <label style={{ color: "white" }}>
-// Filter by Genres
-// <select name="Genre" onChange={handleFilterGenre} multiple={true}>
-//   <option>Genres</option>
-
-//   {allGenre.map((genre) => (
-//     <option key={genre.name} value={genre.name}>
-//       {genre.name}
-//     </option>
-//   ))}
-// </select>
-// </label>

@@ -1,5 +1,5 @@
 .form {
-  background-color: rgb(109, 99, 141);
+  background-color: rgb(96, 87, 122);
   margin: 10px;
   border-radius: 0.2rem;
 }
@@ -36,14 +36,24 @@
   font-size: 20px;
 }
 
-.divGenres {
+.divSelect {
+  display: flex;
+  justify-content: center;
+  margin-left: 825px;
+  max-height: 20px;
+  max-width: 300px;
+  border-radius: 1rem;
   font-size: 20px;
   font-weight: 200px;
 }
 
-.divPlatforms {
+.pSelect {
+  justify-content: center;
   font-size: 20px;
+  margin: 1px;
+  border: 5px;
 }
+
 .inputSubmit {
   align-items: center;
   background: #442070;
@@ -67,8 +77,15 @@
 }
 
 .errors {
-  color: rgb(170, 36, 36);
+  color: red;
   font-weight: 300px;
   font-family: "Times New Roman", Times, serif;
   font-size: 23px;
+}
+
+.delete {
+  cursor: pointer;
+  font-weight: 600;
+  color: black;
+  background-color: rgb(190, 96, 244);
 }

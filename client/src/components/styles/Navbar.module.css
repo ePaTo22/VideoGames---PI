@@ -57,3 +57,16 @@
   overflow: visible;
   margin: 8px;
 }
+
+.clear {
+  font-size: 25px;
+  margin-top: 0.45rem;
+  margin-left: 5px;
+  max-height: 35px;
+  padding: 2px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  background: #743bb9;
+  color: #fff;
+}

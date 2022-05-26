@@ -41,8 +41,12 @@ export default function AddVideogame() {
     }
 
     if (!err.released) errors.released = "Please insert a released date";
-    else if (!/^(\d{1,2})-(\d{1,2})-(\d{4})$/.test(err.released)) {
-      errors.released = "Please enter a date in the format dd-mm-yyyy";
+    else if (
+      !/^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/.test(
+        err.released
+      )
+    ) {
+      errors.released = "Please enter a date in the format mm-dd-yyyy";
     }
 
     if (
@@ -94,6 +98,24 @@ export default function AddVideogame() {
     setInput({
       ...input,
       genres: [...input.genres, e.target.value],
+    });
+  }
+
+  function clearGenre(e) {
+    let a = e;
+
+    setInput({
+      ...input,
+      genres: [...input.genres].filter((e) => e !== a),
+    });
+  }
+
+  function clearPlatforms(e) {
+    let a = e;
+
+    setInput({
+      ...input,
+      platforms: [...input.platforms].filter((e) => e !== a),
     });
   }
 
@@ -233,17 +255,22 @@ export default function AddVideogame() {
         ))}
       </select>
 
-      <div className={s.divGenres}>
+      <div>
         {input.genres.map((e, i) => (
-          <div key={i}>
-            <p>{e}</p>
-          </div>
+          <span key={i} className={s.divSelect}>
+            <p className={s.pSelect}>
+              {e}{" "}
+              <button
+                type="button"
+                onClick={() => clearGenre(e)}
+                className={s.delete}
+              >
+                x
+              </button>{" "}
+            </p>
+          </span>
         ))}
       </div>
-
-      {errors.genres ? (
-        <span className={s.errors}> {errors.genres} </span>
-      ) : null}
 
       <br />
       <br />
@@ -251,28 +278,32 @@ export default function AddVideogame() {
       <label className={s.name}>Plataforms: </label>
       <select
         name="plataforms"
-        onChange={onPlatfromChange}
+        onChange={(e) => onPlatfromChange(e)}
         required
         className={s.input}
       >
         <option value="">Choose the platforms</option>
-        {plataforms &&
-          plataforms?.map((e, i) => {
-            return <option key={i} value={e + " "} label={e} />;
-          })}
+        {plataforms.map((e, i) => {
+          return <option key={i} value={e + " "} label={e} />;
+        })}
       </select>
 
-      <div className={s.divPlatforms}>
+      <div>
         {input.platforms.map((g, i) => (
-          <div key={i}>
-            <p>{g}</p>
+          <div key={i} className={s.divSelect}>
+            <p className={s.pSelect}>
+              {g}{" "}
+              <button
+                type="button"
+                onClick={() => clearPlatforms(g)}
+                className={s.delete}
+              >
+                x
+              </button>{" "}
+            </p>
           </div>
         ))}
       </div>
-
-      {errors.platforms ? (
-        <span className={s.errors}>{errors.platforms} </span>
-      ) : null}
 
       <br />
       <br />
