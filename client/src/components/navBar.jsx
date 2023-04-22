@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import SearchBar from "./searchbar";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,7 +22,6 @@ import s from "./styles/Navbar.module.css";
 export default function NavBar({ setCurrentPage }) {
   const allGenre = useSelector((state) => state.genres);
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState([]);
 
   function handleSortName(e) {
     console.log(e.target.value);
@@ -43,7 +42,6 @@ export default function NavBar({ setCurrentPage }) {
     e.preventDefault();
     setCurrentPage(1);
     dispatch(filterByGenre(e.target.value));
-    console.log(filter);
   }
 
   function handleFilterCreated(e) {

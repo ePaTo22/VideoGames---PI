@@ -11,7 +11,7 @@ export const Pagination = ({
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalGames / gamesPerPage); i++) {
-    pageNumbers.push(i); // nos da el numero correcto de paginas
+    pageNumbers.push(i); // correct page numbers
   }
 
   return (

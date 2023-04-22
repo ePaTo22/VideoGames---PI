@@ -239,32 +239,4 @@ router.post("/", async (req, res, next) => {
 // [ ] Posibilidad de seleccionar/agregar varias plataformas
 // [ ] Botón/Opción para crear un nuevo videojuego
 
-router.delete("/:id", async (req, res, next) => {
-  const { id } = req.params;
-
-  try {
-    if (!id) {
-      return res.status(400).send({ error: "Game not found" });
-    }
-
-    const destroy = await Videogame.destroy({ where: { id: id } }).then(() =>
-      res.send({ message: "Videogame deleted" })
-    );
-  } catch (error) {
-    next(error);
-  }
-});
-
 module.exports = router;
-
-// router.delete('/:id',async(req,res,next) => {
-
-//   const { id } = req.params
-//       try {
-//           const destroyedPlatform = await Platform.destroy({where: {id: id}})
-//           res.send(200)
-//       } catch (e) {
-//           next(e)
-//       }
-
-// })

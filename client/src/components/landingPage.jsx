@@ -2,8 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "../components/styles/land.module.css";
 
-//<LandingFrame />
-
 export default function LandingPage() {
   return (
     <React.Fragment>
@@ -26,5 +24,3 @@ export default function LandingPage() {
     </React.Fragment>
   );
 }
-// style={{ backgoundColor: "aqua" }}
-// <img class={s.image} src={landIMG} alt="landingImg" />

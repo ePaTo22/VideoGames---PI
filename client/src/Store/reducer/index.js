@@ -8,6 +8,7 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_RATING,
   GET_PLATFORMS,
+  DELETE_GAME,
 } from "../actions";
 
 const initialState = {
@@ -138,6 +139,22 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         filteredVideogames: createdVideogames,
+      };
+
+    case DELETE_GAME:
+      console.log(action.payload);
+
+      let deleted = [...state.videogames];
+
+      if (action.payload.length > 8) {
+        deleted = deleted.filteredVideogames.filter(
+          (e) => e.id !== action.payload
+        );
+      }
+
+      return {
+        ...state,
+        filteredVideogames: deleted,
       };
 
     default:

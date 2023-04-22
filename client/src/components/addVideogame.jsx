@@ -88,10 +88,18 @@ export default function AddVideogame() {
   }
 
   function onPlatfromChange(e) {
-    setInput({
-      ...input,
-      platforms: [...input.platforms, e.target.value],
-    });
+    if (input.platforms.includes(e.target.value)) {
+      setInput({
+        ...input,
+        platforms: [...input.platforms],
+      });
+      alert("The platforms has been already added");
+    } else {
+      setInput({
+        ...input,
+        platforms: [...input.platforms, e.target.value],
+      });
+    }
   }
 
   function onGenresChange(e) {

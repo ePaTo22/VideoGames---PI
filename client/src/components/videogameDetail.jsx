@@ -53,11 +53,3 @@ export default function Videogame() {
     </div>
   );
 }
-
-// name,
-// image,
-// genres,
-// description,
-// released,
-// rating,
-// platforms,

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { searchVideogames } from "../Store/actions";
 import { useDispatch } from "react-redux";
 import s from "./styles/search.module.css";

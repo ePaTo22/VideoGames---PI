@@ -8,6 +8,7 @@ export const FILTER_BY_GENRE = "FILTER_BY_GENRE";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_RATING = "ORDER_BY_RATING";
 export const GET_PLATFORMS = "GET_PLATFORMS";
+export const DELETE_GAME = "DELETE_GAME";
 
 export function axiosVideogames() {
   return function (dispatch) {

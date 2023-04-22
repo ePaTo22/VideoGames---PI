@@ -17,13 +17,10 @@ export default function Videogames() {
     dispatch(getGenre());
   }, []);
 
-  console.log(games);
-  //get current games
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
 
-  //change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const prevPage = () => {
